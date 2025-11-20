@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GIF Random Button</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2>GIF Aleatorio</h2>
+
+    <button id="gifButton">Mostrar GIF</button>
+    <img id="gifDisplay" src="" alt="" />
+    <br>
+    
+   
+    <script>
+    const gifs = 
+    [
+        "media/gifs/Alien_Butt.gif",
+        "media/gifs/Astro_Toaster.gif",
+        "media/gifs/PC_Boom.gif",
+        "media/gifs/Robot_Puke.gif",
+        "media/gifs/Rocket_Smoke.gif",
+        "media/gifs/UFO_Beam.gif"
+    ];
+
+    const button = document.getElementById("gifButton");
+    const display = document.getElementById("gifDisplay");
+
+    button.addEventListener("click", () => 
+    {
+        // Si NO quedan gifs → detener todo
+        if (gifs.length === 0) {
+            button.disabled = true;
+            button.innerText = "No quedan más GIFs";
+            return;
+        }
+
+        // Desactivar el botón durante 3 segundos
+        button.disabled = true;
+
+        // Elegir un gif aleatorio
+        const randomIndex = Math.floor(Math.random() * gifs.length);
+        const randomGIF = gifs[randomIndex];
+
+        // Mostrar el gif
+        display.src = randomGIF;
+
+        // Eliminar el gif de la lista para que no vuelva a salir
+        gifs.splice(randomIndex, 1);
+
+        // Reactivar el botón o quitar último gif después de 3 segundos
+        setTimeout(() => {
+
+            if (gifs.length > 0) {
+                // Aún quedan gifs → reactivar botón
+                button.disabled = false;
+            } 
+            else {
+                // Último GIF → desactivar botón y hacer fade out
+                button.innerText = "No quedan más GIFs";
+                button.disabled = true;
+
+                // activar animación flicker
+                display.classList.add("flicker-out");
+
+                // después del flicker, ocultar completamente
+                setTimeout(() => {
+                    display.style.visibility = "hidden";
+                }, 1000); // coincide con duración de la animación
+            }
+
+        }, 3000);
+    });
+    </script>
+
+</body>
+</html>

@@ -4,6 +4,8 @@ body
     font-family: Arial, sans-serif;
     padding: 20px;
     text-align: center;
+    background-color: black;
+
 }
 
 button 
@@ -22,6 +24,23 @@ button:disabled
 {
     background-color: #888;
     cursor: not-allowed;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  10% { opacity: 0; }
+  20% { opacity: 1; }
+  30% { opacity: 0; }
+  40% { opacity: 1; }
+  50% { opacity: 0; }
+  60% { opacity: 1; }
+  70% { opacity: 0; }
+  80% { opacity: 1; }
+  90% { opacity: 0; }
+}
+
+.flicker-out {
+  animation: flicker 3s linear forwards;
 }
 
 img 

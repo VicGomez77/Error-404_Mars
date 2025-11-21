@@ -1,52 +1,115 @@
+/* ======================== */
+/* HOMEPAGE (index.html)    */
+/* ======================== */
 
-body 
-{
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    text-align: center;
-    background-color: black;
-
-}
-
-button 
-{
-    padding: 12px 24px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
+.homepage {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
     cursor: pointer;
-    background-color: #4CAF50;
+
+    background: url("media/gifs/spaceshipcameras.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.enter-text {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
     color: white;
-    transition: background 0.3s ease;
+    text-shadow: 0 0 10px black;
+    animation: blink 1.5s infinite;
 }
 
-button:disabled 
-{
-    background-color: #888;
-    cursor: not-allowed;
+@keyframes blink {
+    50% { opacity: 0; }
 }
 
+/* ======================== */
+/* MAIN PAGE BACKGROUND     */
+/* ======================== */
+
+.mainpage {
+    position: relative;
+    background: url("media/gifs/spaceshipcamerad.png") center/cover no-repeat fixed;
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Overlay appears only when body has .active */
+.mainpage.active::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: brightness(70%) contrast(120%) saturate(130%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* GIF & ERROR 404 above overlay */
+#gifDisplay,
+#error404 {
+    position: relative;
+    z-index: 1;
+    opacity: 0; /* hidden initially */
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Visible state */
+.visible {
+    opacity: 1;
+}
+
+/* Flicker animation */
 @keyframes flicker {
-  0%, 100% { opacity: 1; }
-  10% { opacity: 0; }
-  20% { opacity: 1; }
-  30% { opacity: 0; }
-  40% { opacity: 1; }
-  50% { opacity: 0; }
-  60% { opacity: 1; }
-  70% { opacity: 0; }
-  80% { opacity: 1; }
-  90% { opacity: 0; }
+    0%, 100% { opacity: 1; }
+    10% { opacity: 0; }
+    20% { opacity: 1; }
+    30% { opacity: 0; }
+    40% { opacity: 1; }
+    50% { opacity: 0; }
+    60% { opacity: 1; }
+    70% { opacity: 0; }
+    80% { opacity: 1; }
+    90% { opacity: 0; }
 }
 
 .flicker-out {
-  animation: flicker 3s linear forwards;
+    animation: flicker 3s linear forwards;
 }
 
-img 
-{
-    max-width: 90vw;
+img {
+    width: 90vw;
+    height: auto;
     max-height: 60vh;
     margin-top: 20px;
     border-radius: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#error404 {
+    margin-top: 20px;
+    font-size: clamp(40px, 12vw, 180px);
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 20px black;
+    letter-spacing: 0.3em;
+}
+
+@media (max-width: 600px) {
+    img { max-height: 45vh; }
+    #error404 { margin-top: 10px; letter-spacing: 0.15em; }
 }

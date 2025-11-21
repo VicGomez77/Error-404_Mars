@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GIF Random</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // Redirect to homepage if accessed directly
+        if (document.referrer === "" || !document.referrer.includes("index.html")) {
+            window.location.href = "index.html";
+        }
+    </script>
+</head>
+
+<body class="mainpage">
+
+    <img id="gifDisplay" src="" alt="" />
+    <div id="error404">ERROR 404</div>
+
+    <script>
+        const gifs = [
+            "media/gifs/Alien_Butt.gif",
+            "media/gifs/Astro_Toaster.gif",
+            "media/gifs/PC_Boom.gif",
+            "media/gifs/Robot_Puke.gif",
+            "media/gifs/Rocket_Smoke.gif",
+            "media/gifs/UFO_Beam.gif"
+        ];
+
+        const display = document.getElementById("gifDisplay");
+        const error404 = document.getElementById("error404");
+        let started = false;
+
+        // Preload all GIFs immediately
+        const preloadedGIFs = [];
+        gifs.forEach(src => {
+            const img = new Image();
+            img.src = src;
+            preloadedGIFs.push(img);
+        });
+
+        function showRandomGIF() {
+            if (gifs.length === 0) {
+                // Flicker BOTH gif & text
+                display.classList.add("flicker-out");
+                error404.classList.add("flicker-out");
+
+                setTimeout(() => {
+                    display.classList.remove("visible");
+                    error404.classList.remove("visible");
+                }, 1000);
+
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * gifs.length);
+            const randomGIF = gifs[randomIndex];
+
+            // Display immediately from preloaded cache
+            display.src = randomGIF;
+
+            // Make overlay + GIF + ERROR appear together
+            display.classList.add("visible");
+            error404.classList.add("visible");
+
+            gifs.splice(randomIndex, 1);
+
+            setTimeout(showRandomGIF, 3000);
+        }
+
+        document.body.addEventListener("click", () => {
+            if (!started) {
+                started = true;
+
+                // Activate overlay immediately
+                document.body.classList.add("active");
+
+                // Show GIF + ERROR immediately
+                showRandomGIF();
+            }
+        });
+    </script>
+
+</body>
+</html>
